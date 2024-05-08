@@ -1,0 +1,29 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
+public class ManagerSoundInGame : MonoBehaviour
+{
+    // Start is called before the first frame update
+    [SerializeField] TMP_Text mainSound;
+    [SerializeField] TMP_Text musicSound;
+    [SerializeField] TMP_Text gameSound;
+
+    [SerializeField] Scrollbar mainSoundSC;
+    [SerializeField] Scrollbar musicSoundSC;
+    [SerializeField] Scrollbar gameSoundSC;
+    public void SetMainSound()
+    {
+        mainSound.text = (mainSoundSC.size * 100f).ToString();
+    }
+    public void SetMusicSound()
+    {
+        musicSound.text = (musicSoundSC.size * 100f).ToString();
+
+    }
+    public void SetGameSound()
+    {
+        gameSound.text = (gameSoundSC.size * 100f).ToString();
+    }
+}

@@ -1,0 +1,29 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class UiSound : MonoBehaviour
+{
+    private AudioSource audioSource;
+
+    void Start()
+    {
+        // Bắt đầu phát lại âm thanh
+        audioSource = transform.GetComponent<AudioSource>();
+        if (audioSource != null)
+        {
+            audioSource.Play();
+        }
+    }
+
+    void Update()
+    {
+        // Kiểm tra và xử lý logic (nếu cần thiết)
+
+        // Dừng phát lại âm thanh sau một khoảng thời gian (ví dụ: sau 5 giây)
+        if (Time.time > 5f && audioSource.isPlaying)
+        {
+            audioSource.Stop();
+        }
+    }
+}

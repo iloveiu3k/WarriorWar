@@ -1,0 +1,17 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+
+public class ChangeAvatar : MonoBehaviour
+{
+    public Image imageToChange; // Trỏ đến đối tượng Image trong Inspector
+    public Sprite newImage; // Sprite mới bạn muốn gán
+
+    void Start()
+    {
+        // Gán ảnh mới cho Image
+        imageToChange.sprite = newImage;
+    }
+}

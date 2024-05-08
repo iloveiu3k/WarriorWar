@@ -1,0 +1,143 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class SorceressCombat : MonoBehaviour
+{
+    private GameObject Enemy;
+    private Animator animator;
+    private ParticleSystem attachedParticleSystem;
+    [SerializeField] private ParticleSystem particle;
+    private bool isAttacking = false;
+    private void Start()
+    {
+        animator = GetComponent<Animator>();
+    }
+    private void Attacking()
+    {
+        attachedParticleSystem = Instantiate(particle, Enemy.transform);
+        animator.SetInteger("Trigger Number", 3);
+    }
+    private void ExitAttacking()
+    {
+        animator.SetInteger("Trigger Number", 0);
+        animator.SetTrigger("Disappeared");
+    }
+    private void haveDame()
+    {
+        Character enemy = Enemy.GetComponentInChildren<Character>();
+        Character body = GetComponent<Character>();
+        if (body.getHeal() < body.getMaxHeal())
+        {
+            body.SetHeal(body.getHeal() + enemy.getMaxHeal() / 50f);
+            if(body.getHeal() > body.getMaxHeal())
+            {
+                body.SetHeal(body.getMaxHeal());
+            }
+        }
+        enemy.takeDame(body.getDame());
+    }
+    private void Update()
+    {
+        if (Enemy != null)
+        {
+            if (Enemy.GetComponentInChildren<Character>().getHeal() <= 0)
+            {
+                isAttacking = false;
+                animator.SetInteger("Trigger Number", 0);
+                if (attachedParticleSystem != null)
+                {
+                    Destroy(attachedParticleSystem.gameObject);
+                    attachedParticleSystem = null;
+                }
+                Enemy = null;
+            }
+        }
+    }
+    private void OffParticle()
+    {
+        if (attachedParticleSystem != null)
+        {
+            Destroy(attachedParticleSystem.gameObject);
+            attachedParticleSystem = null;
+        }
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Enemy") && Enemy==null)
+        {
+            Enemy = other.gameObject;
+            Debug.Log(Enemy.name);
+        }
+    }
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            if (Enemy == null)
+            {
+                Enemy = other.gameObject;
+            }
+            if (!animator.GetBool("Moving"))
+            {
+                transform.parent.LookAt(Enemy.transform);
+                if (!isAttacking)
+                {
+                    animator.SetInteger("Trigger Number", 2);
+                    animator.SetTrigger("Attack");
+                    isAttacking = true;
+                }
+            }
+            else if (animator.GetBool("Moving"))
+            {
+                isAttacking = false;
+                if (attachedParticleSystem != null)
+                {
+                    Destroy(attachedParticleSystem.gameObject);
+                    attachedParticleSystem = null;
+                }
+            }
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        //Debug.Log(Enemy.name);
+        if (other.gameObject == Enemy)
+        {
+            Enemy = null;
+            if (animator.GetInteger("Trigger Number") == 3)
+            {
+                isAttacking = false;
+                animator.SetInteger("Trigger Number", 0);
+                if (attachedParticleSystem != null)
+                {
+                    Destroy(attachedParticleSystem.gameObject);
+                    attachedParticleSystem = null;
+                }
+            }
+            else if (animator.GetInteger("Trigger Number") == 2)
+            {
+                isAttacking = false;
+                animator.SetInteger("Trigger Number", 0);
+                animator.SetTrigger("Disappeared");
+                if (attachedParticleSystem != null)
+                {
+                    Destroy(attachedParticleSystem.gameObject);
+                    attachedParticleSystem = null;
+                }
+            } else if (animator.GetInteger("Trigger Number") == 0)
+            {
+                isAttacking = false;
+                if (attachedParticleSystem != null)
+                {
+                    Destroy(attachedParticleSystem.gameObject);
+                    attachedParticleSystem = null;
+                }
+            }
+        }
+    }
+    public GameObject EnemyTransform()
+    {
+        return this.Enemy;
+    }
+}

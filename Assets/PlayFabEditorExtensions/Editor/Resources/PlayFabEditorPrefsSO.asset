@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d0199c11aa6f514784c5c69cd8378d8, type: 3}
+  m_Name: PlayFabEditorPrefsSO
+  m_EditorClassIdentifier: 
+  DevAccountEmail: truongtran22tk@gmail.com
+  DevAccountToken: cqpcrcuqyae34g3ud7h7ectawaqkpq84iq8jrtd8jrsn1zpd4qqcwtzjsmcwy3gehhmudsa1mg46odu3ud8tb3i7of8txj5c7kg91h9ngstgemiyhabx33a55o87qgm6zi6w3md68ogjqwfcp69hxhws9r7utt5hdz41jtiytgbqfhn6bwtetgkizx6s5wmbqexjtytf
+  AadAuthorization: 
+  SelectedStudio: 'Warrior War 2: Legend'
+  SdkPath: Assets/PlayFabSDK
+  EdExPath: 
+  LocalCloudScriptPath: 
+  PanelIsShown: 0
+  curMainMenuIdx: 1
+  curSubMenuIdx: 0

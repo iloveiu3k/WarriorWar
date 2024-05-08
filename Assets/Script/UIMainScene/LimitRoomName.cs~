@@ -1,0 +1,25 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class LimitRoomName : MonoBehaviour
+{
+    public InputField inputField;
+    public int maxCharacterCount = 6; // Số ký tự tối đa cho phép
+
+    private void Start()
+    {
+        // Gắn sự kiện OnValueChange của Input Field với phương thức kiểm tra độ dài
+        inputField.onValueChanged.AddListener(OnInputFieldValueChange);
+    }
+
+    private void OnInputFieldValueChange(string newValue)
+    {
+        if (newValue.Length > maxCharacterCount)
+        {
+            // Nếu vượt quá giới hạn, cắt chuỗi lại
+            inputField.text = newValue.Substring(0, maxCharacterCount);
+        }
+    }
+}

@@ -1,0 +1,120 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class LongRaceCombat : MonoBehaviour
+{
+    [Header("State")]
+    public float attackRange;
+    public float aggroRange;
+    [SerializeField] GameObject Bullet;
+    [SerializeField] float speedAttack;
+    private GameObject Enemy;
+    private bool isAttacking;
+    [SerializeField] private Transform Bow;
+    private Animator animator;
+    private Coroutine attackCoroutine;
+    private bool haveEnemy;
+    private void Start()
+    {
+        animator = GetComponent<Animator>();
+    }
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, attackRange);
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, aggroRange);
+    }
+    private void Attack()
+    {
+        // Tạo một bản sao của đối tượng "Bullet"
+        GameObject bulletInstance = Instantiate(Bullet, Bow.position, Bullet.transform.rotation);
+
+        // Lấy thành phần "Bullet" từ bản sao vừa tạo
+        Bullet bulletScript = bulletInstance.GetComponent<Bullet>();
+
+        // Gán giá trị "dame" cho đối tượng "Bullet"
+        bulletScript.SetDame(GetDame());
+
+    }
+    private void Update()
+    {
+        if (Enemy != null)
+        {
+            if (Enemy.GetComponentInChildren<Character>().getHeal() <= 0)
+            {
+                animator.SetInteger("Trigger Number", 0);
+                haveEnemy = false;
+                isAttacking = false;
+                StopCoroutine(attackCoroutine);
+                Enemy = null;
+            }
+        }
+    }
+    private IEnumerator Attacking()
+    {
+        attackCoroutine = null;
+        isAttacking = true;
+        animator.SetInteger("Trigger Number", 2);
+        animator.SetTrigger("Attack");
+        yield return new WaitForSeconds(speedAttack);
+        isAttacking = false;
+        
+    }
+    public void OnTriggerStay(Collider other)
+    {
+        if(other.CompareTag("Enemy"))
+        {
+            if (Enemy == null)
+            {
+                Enemy = other.gameObject;
+            }
+            haveEnemy = true;
+            //StartCoroutine(Attack());
+            if (!animator.GetBool("Moving"))
+            {
+                transform.parent.LookAt(Enemy.transform);
+                if (!isAttacking)
+                {
+                    attackCoroutine = StartCoroutine(Attacking());
+                }
+                //isAttacking = true;
+            }
+            else if (animator.GetBool("Moving"))
+            {
+                if (attackCoroutine != null)
+                {
+                    StopCoroutine(attackCoroutine);
+                }
+                isAttacking = false;
+            }
+        }
+    }
+    public void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Enemy"))
+        {
+            //Debug.Log("Ke thu bien mat");
+            animator.SetInteger("Trigger Number", 0);
+            haveEnemy = false;
+            isAttacking = false;
+            StopCoroutine(attackCoroutine);
+            Enemy = null;
+        }
+    }
+    public GameObject GetEnemyTransform()
+    {
+        return this.Enemy;
+    }
+    public bool HaveEnemy()
+    {
+        return this.haveEnemy;
+    }
+    public float GetDame()
+    {
+        Character body = GetComponent<Character>();
+        return body.getDame();
+    }
+}

@@ -1,0 +1,17 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class MageCombat : MonoBehaviour
+{
+    // Start is called before the first frame update
+    [SerializeField] GameObject Creep;
+    private int numberCreep = 5;
+    private void Update()
+    {
+        if (numberCreep < 5)
+        {
+            Instantiate(Creep, transform.position,transform.rotation);
+        }
+    }
+}

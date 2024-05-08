@@ -1,0 +1,42 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PlayerInput : MonoBehaviour
+{
+    [SerializeField]
+    private Camera Camera;
+    [SerializeField]
+    private RectTransform SelectionBox;
+    [SerializeField]
+    private LayerMask UnitLayerMask;
+    [SerializeField]
+    private LayerMask FloorLayerMask;
+
+    private Vector2 StarMousePosition;
+
+    private void Update()
+    {
+        HandleSelectionInputs();
+    }
+    private void HandleSelectionInputs()
+    {
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            SelectionBox.sizeDelta = Vector2.zero;
+            SelectionBox.gameObject.SetActive(true);
+            StarMousePosition = Input.mousePosition;
+        }
+        else if (Input.GetKey(KeyCode.Mouse0)){
+            ResizeSelectionBox();
+        }else if (Input.GetKeyUp(KeyCode.Mouse0))
+        {
+            SelectionBox.sizeDelta = Vector2.zero;
+            SelectionBox.gameObject.SetActive(false);
+        }
+    }
+    private void ResizeSelectionBox()
+    {
+
+    }
+}

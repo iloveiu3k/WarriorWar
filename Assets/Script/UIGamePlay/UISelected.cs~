@@ -1,0 +1,35 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using Photon.Pun;
+using Photon.Realtime;
+using TMPro;
+using static UnityEngine.UI.GridLayoutGroup;
+
+public class UISelected : MonoBehaviourPunCallbacks
+{
+    public static Selected instance;
+    private void Awake()
+    {
+        instance = this;
+    }
+    [SerializeField] GameObject playerLocal;
+    [SerializeField] GameObject playerRival;
+
+    [SerializeField] Transform p;
+    private TMP_Text nameText;
+
+    private void Start()
+    {
+        if (PhotonNetwork.IsConnected)
+        {
+            ZoneSelect();
+        }
+    }
+    private void ZoneSelect()
+    {
+        playerLocal.GetComponentInChildren<TMP_Text>().text = PhotonNetwork.LocalPlayer.NickName;
+        playerRival.GetComponentInChildren<TMP_Text>().text = PhotonNetwork.PlayerListOthers[0].NickName;
+
+    }
+}

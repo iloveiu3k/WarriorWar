@@ -1,0 +1,31 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class WarriorsInput : MonoBehaviour
+{
+    // Start is called before the first frame update
+    private List<string> Units = new List<string>();
+    private List<string> spriteUnits = new List<string>();
+    void Start()
+    {
+        Units = LoadStringList("Units");
+        spriteUnits = LoadStringList("spriteUnits");
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+    private List<string> LoadStringList(string key)
+    {
+        // Đọc chuỗi từ PlayerPrefs
+        string serializedList = PlayerPrefs.GetString(key);
+
+        // Chuyển đổi chuỗi thành List<string> bằng cách tách các giá trị
+        List<string> stringList = new List<string>(serializedList.Split(','));
+
+        return stringList;
+    }
+}

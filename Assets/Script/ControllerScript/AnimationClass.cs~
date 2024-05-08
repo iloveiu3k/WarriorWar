@@ -1,0 +1,20 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class AnimationClass
+{
+    public void AnimationMove(Animator animator)
+    {
+        animator.SetFloat("Animation Move", 1f);
+        animator.SetFloat("Velocity", 1f);
+        animator.SetBool("Moving", true);
+    }
+    public void AnimationStopMove(Animator animator)
+    {
+        animator.SetFloat("Animation Move", 0f);
+        animator.SetFloat("Velocity", 0f);
+        animator.SetBool("Moving", false);
+    }
+
+}

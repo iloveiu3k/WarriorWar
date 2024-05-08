@@ -1,0 +1,20 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using Photon.Pun;
+using Photon.Realtime;
+public class SoundCharacter : MonoBehaviour
+{
+    [SerializeField] private AudioClip dameSound;
+    [SerializeField] private AudioClip dieSound;
+    [SerializeField] private AudioClip moveSound;
+    void Start()
+    {
+        
+    }
+
+    void Update()
+    {
+        
+    }
+}

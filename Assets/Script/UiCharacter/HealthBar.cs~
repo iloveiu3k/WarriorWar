@@ -1,0 +1,22 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class HealthBar : MonoBehaviour
+{
+    // Start is called before the first frame update
+    private float heal;
+    private float maxHeal;
+    private Character character;
+    void Start()
+    {
+        character = transform.root.GetComponentInChildren<Character>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        heal = character.getHeal();
+        if(hea)
+    }
+}
